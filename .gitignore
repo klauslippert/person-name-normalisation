@@ -1,0 +1,4 @@
+personnamenorm.egg-info/
+build/
+dist/
+personnamenorm/__pycache__/**
