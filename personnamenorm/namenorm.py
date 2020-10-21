@@ -15,8 +15,10 @@ class namenorm():
     '''
     
     def __init__ (self,raw,debug=False):
-        ''' 2DO ?    # to lower case
+        ''' 2DO ?    # to lower case in the beginning
+                     # remove $%& etc.
                      # remove et.al
+                     # remove underscore in prefix in the end
         '''
 
         # handle logging: there is already logging

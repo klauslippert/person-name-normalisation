@@ -2,3 +2,5 @@ personnamenorm.egg-info/
 build/
 dist/
 personnamenorm/__pycache__/**
+*.txt
+
