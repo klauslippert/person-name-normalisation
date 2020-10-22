@@ -1,11 +1,25 @@
 # Person Name Normalisation
+**[github](https://github.com/klauslippert/person-name-normalisation/)**
+
 ### Unifying person names in different notations
+
 different sources write person names in different notations:
 
 -  Firstname Secondname Lastname
 -  Lastname, Firstname Secondname
 
-please see the [python file](tests/test_personnamenorm.py) for testing for more examples
+also extracted are:
+
+- academic degrees (e.g. 'Dr.', 'Ph.D.')
+- name prefixes (e.g. 'van ter', 'von', 'De')
+
+included: german, french, italian, dutch
+
+missing: spanish, portuguese
+
+
+
+missing: double Lastnames in Spanish
 
 ## Usage
 ```python
@@ -31,8 +45,7 @@ nameobj.fullname <str>
 nameobj.fullname_abbrev <str>
 'von und zu Lastname, F S'
 ```
-more examples can be found in my [github](https://github.com/klauslippert/person-name-normalisation) repo in the Tests folder.
-
+more examples can be found in this [file](https://github.com/klauslippert/person-name-normalisation/tests/test_personnamenorm.py)  in my github. 
 
 #### Debug-mode
 by default debug mode is off.
@@ -52,5 +65,8 @@ logging is implemented
 - writes to the existing logging handler if other logging IS enabled before
 
 ## Test
-see folder Tests in my [github](https://github.com/klauslippert/person-name-normalisation) repo.
+see folder 'tests' in my [github](https://github.com/klauslippert/person-name-normalisation) repo.
+```python
+python test_personnamenorm.py
+```
 
