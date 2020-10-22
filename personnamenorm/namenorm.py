@@ -1,7 +1,9 @@
-from re import sub
 from ftfy import fix_text
 from nltk import word_tokenize as wt
 import logging
+
+
+
 
 # logging
 logger = logging.getLogger(__name__)
@@ -15,10 +17,10 @@ class namenorm():
     '''
     
     def __init__ (self,raw,debug=False):
-        ''' 2DO ?    # to lower case in the beginning
-                     # remove $%& etc.
+        ''' 2DO      # to lower case in the beginning
                      # remove et.al
                      # remove underscore in prefix in the end
+                     # strings mit nur zahlen -> allwords[-1] klappt nicht
         '''
 
         # handle logging: there is already logging
@@ -48,13 +50,12 @@ class namenorm():
 
         # check type of input
         if isinstance(raw,str) == False:
-            logger.critical('Input must be a simple string')
+            logger.critical("Input must be <class 'str'>, you gave me "+str(type(raw)))
             return
 
 
 
 
-        
         
         # general preparations
         _ = self._create_dict_lookup()
@@ -63,6 +64,7 @@ class namenorm():
         self.__text = self.name['raw'].strip()
         _ = self._fix_unicode()
         _ = self._remove_formating_chars()
+        _ = self._remove_special_characters()
         _ = self._transform_prefixes()
         _ = self._tokenize_annotate()
         _ = self._extract_title()
@@ -97,9 +99,30 @@ class namenorm():
             in:  self.text  <str> | text
             out: self.text  <str> | text without formating chars
         '''
-        self.__text = self.__text.split('\\n')[0].strip()
-        self.__text = self.__text.split('¶')[0].strip()
-        self.__text = ' '.join(self.__text.replace('\\t','').split())
+        self.__text = self.__text.replace('\n','CUT')
+        self.__text = self.__text.replace('¶','CUT')
+        self.__text = self.__text.split('CUT')[0].strip()
+#        self.__text = self.__text.split('¶')[0].strip()
+        #self.__text = ' '.join(self.__text.replace('\\t','').split())
+        self.__text = self.__text.replace('\t',' ')    
+
+
+
+    def _remove_special_characters(self):
+       ''' remove special characters
+   
+            in:  self.text  <str> | text
+            out: self.text  <str> | text without special chars       
+       '''
+       special_chars='!§%&/=<>;:-_$?*+#|'
+       for char in special_chars:
+           self.__text=self.__text.replace(char,' ')
+       very_special_chars='\\'
+       for char in very_special_chars:        
+           self.__text=self.__text.replace(char,' ')
+       
+       self.__text=self.__text.replace("d'","d_ ")
+
 
     def _tokenize_annotate(self):
         ''' tokenize text (using nltk tokenizer)
@@ -151,7 +174,7 @@ class namenorm():
         # name prefixes
         prefix_list = ['von und zu','von dem','von der','von',    #german
                              'zu','vom','zum', 'van der',                         #german
-                             'de',"d'",                                 #french
+                             'de',"d_",                                 #french
                              'di','de','del','da','degli','dalla',      #italian
                              'van de','van ter','van','ter'             #dutch
                                                                         #spanish MISSING
@@ -200,7 +223,7 @@ class namenorm():
             out: self.__prefix_list_underscore <list(str)> | list of prefixes with underscore
         '''
         for x,y in zip(self.__prefix_list_space, self.__prefix_list_underscore):
-            self.__text=sub(x,' '+y+' ',self.__text)
+            self.__text=self.__text.replace(x,' '+y+' ')
 
     def _extract_title(self):   
         ''' extract the educational titles
@@ -219,7 +242,13 @@ class namenorm():
             out: self.name['prefix'] <list(str)>
         '''
         self.name['prefix'] = [x for x,y in zip(self.__sentence,self.__annotate) if y == 'prefix']   
-        self.name['prefix'] = [sub('_',' ',x) for x in self.name['prefix']]
+        self.name['prefix'] = [x.replace('_',' ') for x in self.name['prefix']]
+        try: 
+            idx=self.name['prefix'].index('d ')
+            self.name['prefix'][idx]="d'"
+        except:
+            pass
+
 
 
     def _extract_name(self):

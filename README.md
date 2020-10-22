@@ -30,7 +30,7 @@ nameobj.fullname <str>
 nameobj.fullname_abbrev <str>
 'von und zu Lastname, F S'
 ```
-more examples can be found in the github test-folder
+more examples can be found in my [github](https://github.com/klauslippert/person-name-normalisation) repo in the Tests folder.
 
 
 #### Debug-mode
@@ -47,9 +47,9 @@ returns additional information as logging message.
 ## Logging
 logging is implemented
 
-- and writes to std-out if logging is NOT enabled before 
-- and to the existing logging handler if other logging is enabled before
+- writes to std-out if logging IS NOT enabled before 
+- writes to the existing logging handler if other logging IS enabled before
 
 ## Test
-
+see folder Tests in my [github](https://github.com/klauslippert/person-name-normalisation) repo.
 
