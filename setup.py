@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="personnamenorm", 
-    version="0.1",
+    version="0.2",
     author="Klaus Lippert",
-    author_email="lippert@zbmed.de",
+    author_email="",
     description="unifying person names in different notations",
     long_description=long_description,
     long_description_content_type="text/markdown",

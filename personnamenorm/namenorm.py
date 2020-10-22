@@ -1,3 +1,15 @@
+
+
+__description__ = "unifying different notations of person names"
+__author__ = "Klaus Lippert"
+__copyright__ = "2020 Klaus Lippert"
+__license__ = "MIT"
+__email__ = "klaus.lippert@mailbox.org"
+__version__ = "0.1"
+
+
+
+
 from ftfy import fix_text
 from nltk import word_tokenize as wt
 import logging
@@ -11,9 +23,7 @@ logger = logging.getLogger(__name__)
 
 class namenorm():
     '''
-       
-    2DO    DESCRIPTION MISSING
-
+    unifying different notations of person names
     '''
     
     def __init__ (self,raw,debug=False):
