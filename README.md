@@ -45,7 +45,7 @@ nameobj.fullname <str>
 nameobj.fullname_abbrev <str>
 'von und zu Lastname, F S'
 ```
-more examples can be found in this [file](https://github.com/klauslippert/person-name-normalisation/tests/test_personnamenorm.py)  in my github. 
+more examples can be found in this [file](https://github.com/klauslippert/person-name-normalisation/blob/main/tests/test_personnamenorm.py)  in my github. 
 
 #### Debug-mode
 by default debug mode is off.
