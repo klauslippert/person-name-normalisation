@@ -1,5 +1,4 @@
 # Person Name Normalisation
-**[github](https://github.com/klauslippert/person-name-normalisation/)**
 
 ### Unifying person names in different notations
 
@@ -22,15 +21,8 @@ missing: spanish, portuguese
 missing: double Lastnames in Spanish
 
 ## Installation
-##### using PIP and the www
 ```bash
-pip install <MISSING>
-```
-
-##### using PIP locally
-```bash
-python setup.py bdist_wheel 
-pip install dist/personnamenorm-<VERSION-NR>-py3-none-any.whl
+pip install personnamenorm
 ```
 
 ## Usage
@@ -57,7 +49,7 @@ nameobj.fullname <str>
 nameobj.fullname_abbrev <str>
 'von und zu Lastname, F S'
 ```
-more examples can be found in this [file](https://github.com/klauslippert/person-name-normalisation/blob/main/tests/test_personnamenorm.py)  in my github. 
+more examples can be found in this [file](https://github.com/klauslippert/person-name-normalisation/blob/main/tests/test_personnamenorm.py)  on github. 
 
 #### Debug-mode
 by default debug mode is off.
@@ -77,7 +69,7 @@ logging is implemented
 - writes to the existing logging handler if other logging IS enabled before
 
 ## Test
-see folder 'tests' in my [github](https://github.com/klauslippert/person-name-normalisation) repo.
+see folder 'tests' on [github](https://github.com/klauslippert/person-name-normalisation).
 ```python
 python test_personnamenorm.py
 ```
