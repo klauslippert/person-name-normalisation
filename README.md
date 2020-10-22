@@ -5,6 +5,7 @@ different sources write person names in different notations:
 -  Firstname Secondname Lastname
 -  Lastname, Firstname Secondname
 
+please see the [python file](tests/test_personnamenorm.py) for testing for more examples
 
 ## Usage
 ```python
