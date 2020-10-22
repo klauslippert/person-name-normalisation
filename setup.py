@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="personnamenorm", 
-    version="0.2",
+    name="personnamenorm",
+    version="0.1",
     author="Klaus Lippert",
     author_email="",
     description="unifying person names in different notations",
@@ -20,7 +20,7 @@ setuptools.setup(
         "Topic :: Text Processing :: Linguistic"
     ],
     install_requires=[
-        "nltk >= 3.5",
+        "nltk >= 3.4",
         "ftfy >= 5.8"
     ]
 )
