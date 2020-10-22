@@ -21,6 +21,18 @@ missing: spanish, portuguese
 
 missing: double Lastnames in Spanish
 
+## Installation
+##### using PIP and the www
+```bash
+pip install <MISSING>
+```
+
+##### using PIP locally
+```bash
+python setup.py sdist bdist_wheel 
+pip install dist/personnamenorm-<VERSION-NR>-py3-none-any.whl
+```
+
 ## Usage
 ```python
 import personnamenorm as pnn
