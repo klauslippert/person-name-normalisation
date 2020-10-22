@@ -29,7 +29,7 @@ pip install <MISSING>
 
 ##### using PIP locally
 ```bash
-python setup.py sdist bdist_wheel 
+python setup.py bdist_wheel 
 pip install dist/personnamenorm-<VERSION-NR>-py3-none-any.whl
 ```
 
