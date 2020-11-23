@@ -1,0 +1,8 @@
+__pycache__
+*.csv
+*.p
+test.py
+table_usable_names.md
+screenout
+
+
