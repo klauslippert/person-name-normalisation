@@ -21,7 +21,7 @@ The steps to create your own p values are:
   -  make yourself familiar with and respect the Terms of Usage at https://orcid.org/content/orcid-public-data-file
   -  download the dump (only summaries needed) at: https://orcid.figshare.com/articles/dataset/ORCID_Public_Data_File_2020/13066970/1
   -  unpack 
-  -  adopt and run `data/raw/extract_ORCID_first-names.sh` and `data/raw/extract_ORCID_last-names.shh`
+  -  adopt and run `data/raw/extract_ORCID_first-names.sh` and `data/raw/extract_ORCID_last-names.sh`
   -  name the results `names_first_raw_ORCID.csv` and `names_last_raw_ORCID.csv` and put it into `data/raw/`
 
 #### 2. adopt and run `main.py` 
