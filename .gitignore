@@ -3,4 +3,9 @@ build/
 dist/
 personnamenorm/__pycache__/**
 *.txt
-
+*.ipynb
+*
+!personnamenorm/
+!setup.py
+!test_personnamenorm.py
+!coding.py

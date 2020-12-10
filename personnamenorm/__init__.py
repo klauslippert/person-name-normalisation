@@ -5,7 +5,11 @@ __author__ = "Klaus Lippert"
 __copyright__ = "2020 by Klaus Lippert"
 __license__ = "MIT"
 __email__ = "klaus.lippert@mailbox.org"
-__version__ = "0.2"
+__version__ = "0.2.3"
 
 from .namenorm import *
+from .downloader import *
+
+# download of p values from github if file does not exist 
+_=downloader()
 
