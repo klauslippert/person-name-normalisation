@@ -3,7 +3,7 @@ from nltk import word_tokenize as wt
 import logging
 import pickle
 from numpy import prod
-
+import os
 
 # logging
 logger = logging.getLogger(__name__)
@@ -53,7 +53,10 @@ class namenorm():
             logger.setLevel(logging.WARNING)
 
         # load p values from Naive Bayes
-        self.p_firstname = pickle.load(open("personnamenorm/p_firstname.p","rb"))
+        
+        path=os.path.dirname(os.path.abspath(__file__))
+        print(path)
+        self.p_firstname = pickle.load(open(path+"/p_firstname.p","rb"))
         logger.debug('loaded p values firstname')
 
         # annotation dict
@@ -236,7 +239,7 @@ class namenorm():
        
        
         ## some special prefix
-        self.__text=self.__text.replace("d'","d_ ")
+        self.__text=self.__text.replace("'","_ ")
        
        
        
@@ -359,7 +362,7 @@ class namenorm():
                        'de',"d_",'le','la','de la',
                        'di','de','del','da','degli','dalla',
                        'van de','van ter','van','ter',
-                       'van den', 'van der', 'te'
+                       'van den', 'van der', 'te','o_'
                       ]
         
         prefix_list = prefix_list +\

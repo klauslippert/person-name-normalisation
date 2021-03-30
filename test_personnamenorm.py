@@ -75,6 +75,9 @@ inputdata=[
 'First van den Last',
 'van den Last First',
 'First Last van den',
+"O'Last, First",
+"First O'Last",
+"O'Last First",
 ]
 
 ## expected output from pnn.unify(<input>);pnn.name
@@ -116,8 +119,8 @@ target = [
 {'raw':"FirstLast",'firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':[], 'fullname': "Last, First",'fullname_abbrev': "Last, F"},
 {'raw':"FirstSecond Last",'firstname':['First','Second'], 'lastname':['Last'],'title':[],'prefix':[], 'fullname': 'Last, First Second', 'fullname_abbrev': 'Last, F S'},
 {'raw':"FirstSecondLast",'firstname':['First','Second'], 'lastname':['Last'],'title':[],'prefix':[], 'fullname': 'Last, First Second', 'fullname_abbrev': 'Last, F S'},
-{'raw':"first d'Last",'firstname':['First'], 'lastname':['Last'],'title':[],'prefix':["d'"], 'fullname': "d'Last, First", 'fullname_abbrev': "d'Last, F", 'prefix': ["d'"]},
-{'raw':"d'Last, first",'firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':["d'"], 'fullname': "d'Last, First",'fullname_abbrev': "d'Last, F"},
+{'raw':"first d'Last",'firstname':['First'], 'lastname':['Last'],'title':[],'prefix':["d"], 'fullname': "d Last, First", 'fullname_abbrev': "d Last, F"},
+{'raw':"d'Last, first",'firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':["d"], 'fullname': "d Last, First",'fullname_abbrev': "d Last, F"},
 {'raw':"first 123 last",'firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':[], 'fullname': "Last, First",'fullname_abbrev': "Last, F"},
 {'raw':"1234 567",'firstname':[], 'lastname':[],'title':[], 'prefix':[], 'fullname': "",'fullname_abbrev': ""},
 {'raw':"Dr. Last",'firstname':[], 'lastname':['Last'],'title':['Dr.'], 'prefix':[], 'fullname': "Last,",'fullname_abbrev': "Last,"},
@@ -147,6 +150,9 @@ target = [
 {'raw':'First van den Last','firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':['van den'], 'fullname': "van den Last, First",'fullname_abbrev': "van den Last, F"},
 {'raw':'van den Last First','firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':['van den'], 'fullname': "van den Last, First",'fullname_abbrev': "van den Last, F"},
 {'raw':'First Last van den','firstname':['First'], 'lastname':['Last'],'title':[], 'prefix':['van den'], 'fullname': "van den Last, First",'fullname_abbrev': "van den Last, F"},
+{'raw':"O'Last, First",'firstname':['First'], 'lastname':["O Last"],'title':[], 'prefix':[], 'fullname': "O Last, First",'fullname_abbrev': "O Last, F"},
+{'raw':"First O'Last",'firstname':['First'], 'lastname':["O Last"],'title':[], 'prefix':[], 'fullname': "O Last, First",'fullname_abbrev': "O Last, F"},
+{'raw':"O'Last First",'firstname':['First'], 'lastname':["O Last"],'title':[], 'prefix':[], 'fullname': "O Last, First",'fullname_abbrev': "O Last, F"},
 
 ]
 

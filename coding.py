@@ -1,9 +1,11 @@
 import personnamenorm 
 import string
+
+
 pnn=personnamenorm.namenorm(debug=True)
 
 
-## add initials
+## add initials   ## still needed ?
 for x in string.ascii_lowercase:
     pnn.p_firstname[x]=1
     pnn.p_firstname[x+'.']=1
@@ -48,9 +50,16 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('Jonn Stefan')
 #pnn.unify('Charles E. Jr. Davis')
 #pnn.unify('G. Rodney Jr. Nelson')
-pnn.unify('M. Victor Wickerhauser')
+#pnn.unify('M. Victor Wickerhauser')
 #pnn.unify('J. Richard Gyory')
-
+#pnn.unify('Sauerwein Till')
+#pnn.unify('Leyla Jael Garcia Castro')
+#pnn.unify(' Garcia   Castro Leyla Jael ')
+#pnn.unify(' Norbert Walter Borjans ')
+#pnn.unify('Maria del Pilar del Toro')
+#pnn.unify('del Toro Maria del Pilar')
+#pnn.unify("Navsaria, P.H.")
+pnn.unify("Clevert, D.A.")
 
 
 #an initial must not be the first one in the list of firstnames !   REMOVE DOTS AFTER TITLE EXTRACTION !
