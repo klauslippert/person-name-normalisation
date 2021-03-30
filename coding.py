@@ -6,11 +6,12 @@ pnn=personnamenorm.namenorm(debug=True)
 
 
 ## add initials   ## still needed ?
-for x in string.ascii_lowercase:
-    pnn.p_firstname[x]=1
-    pnn.p_firstname[x+'.']=1
-pnn.p_firstname['jr'] = 1
-pnn.p_firstname['jr.'] = 1
+#for x in string.ascii_lowercase:
+#    pnn.p_firstname[x]=1
+#pnn.p_firstname[x+'.']=1
+    
+#pnn.p_firstname['jr'] = 1
+#pnn.p_firstname['jr.'] = 1
 
 
 
@@ -59,11 +60,18 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('Maria del Pilar del Toro')
 #pnn.unify('del Toro Maria del Pilar')
 #pnn.unify("Navsaria, P.H.")
-pnn.unify("Clevert, D.A.")
-
+pnn.unify("Clevert, J. D.A. Max")
+#pnn.unify("Shu, Xiao-Ou")
+#pnn.unify('Ph.D. Last, First')
+#pnn.unify('PhD Last, ')
 
 #an initial must not be the first one in the list of firstnames !   REMOVE DOTS AFTER TITLE EXTRACTION !
 
 
 from pprint import pprint
 pprint(pnn.name)
+print('version:',personnamenorm.__version__)
+
+
+
+

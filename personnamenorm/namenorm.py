@@ -4,6 +4,7 @@ import logging
 import pickle
 from numpy import prod
 import os
+import re
 
 # logging
 logger = logging.getLogger(__name__)
@@ -65,8 +66,16 @@ class namenorm():
         # a prefix before a word makes it more likely to be a lastname
         # this factor is multplied by p_firstname if the word has a prefix
         self.prefix_faktor=0.8
-        self.fl_faktor=(1.0,1.0)
         
+        # if there is NO comma inside it's more likely to be: firstname lastname 
+        # (factor on p_firstname of the first word , factor on p_firstname of the last word)
+        # this is applied only to the first and the last word 
+        self.fl_faktor=(1.1,0.9)
+        
+        # if there is a comma inside it's more likely to be: lastname firstname
+        # (factor on p_firstname of the first word , factor on p_firstname of the last word)
+        # this is applied only to the first and the last word 
+        self.lf_faktor=(0.9,1.1)
         
         return None
     
@@ -104,18 +113,30 @@ class namenorm():
         _ = self._fix_unicode()
         _ = self._remove_formating_chars()
         _ = self._remove_special_characters()
+        
+        
+        #self.__text = self.__text.replace('.','. ')
+        #logger.debug("replace '.' by '. '")
+        #logger.debug(f'    "{self.__text}"')
+        
+        
         _ = self._replace_umlaute()
         _ = self._remove_multiple_whitespace()
         self.__text = ' '+self.__text+' '
         _ = self._transform_prefixes()
         
         # extraction
+        
         _ = self._tokenize_annotate(0)
         _ = self._extract_title()
         _ = self._remove_bracket_content()
         _ = self._cut_CamelCase()   
         
+        _ = self._tokenize_annotate(0)
+        
+        _ = self._cut_initials()
         _ = self._tokenize_annotate(2)
+        
         
         version = 2
         if version == 1:  # old version
@@ -256,7 +277,7 @@ class namenorm():
             upd: self.text  <str> | text with single whitespaces
             out: None
        '''
-        self.__text = ' '.join(self.__text.split()).strip()  # handle multiple whitespaces
+        self.__text = ' '.join(self.__text.split()).strip()
         
         logger.debug('removed multiple whitespace:')
         logger.debug(f'    "{self.__text}"')
@@ -283,14 +304,20 @@ class namenorm():
         ''' tokenize text (using nltk tokenizer)
             and annotate text (using lookup dict) 
         
-            inp: self.text           <str> | text
+            inp: self.__text           <str> | text
                  self.dict_allg     <dict> | lookup dictionary
             upd: self.sentence <list(str)> | tokenized text
                  self.annotate <list(str)> | annotations
             out: None
         '''
 
+        logger.debug('tokenize')
         self.__sentence=wt(self.__text)
+        #self.__sentence=self.__text.split(' ')
+        logger.debug(f'    {self.__sentence}')
+        
+        
+        
         self.__annotate=[]
         for word in self.__sentence:
             if word.isnumeric():
@@ -310,7 +337,7 @@ class namenorm():
         
         self.__p_first = [self._get_p_word(x)\
                           if y=='str' or y=='initial'\
-                          else (-1,-1)\
+                          else (1,1)\
                           for x,y in zip(self.__sentence,self.__annotate )\
                           ]
         
@@ -341,16 +368,17 @@ class namenorm():
 
         # titles
         list_title = ['Prof.','Prof',
-                      'PhD', 'Ph.D.', 'Dr.','Dr',
+                      'PhD', 'Ph.D.','Ph. D.','Ph. D', 'Dr.','Dr',
                       'MBA','MSc.','BSc.','M.A.','B.A.',
                       'MSc','BSc','M.A','B.A',
                       'Dipl.','Dipl',
-                      'Dipl.Ing.','Dr.Ing.','Dipl.Ing','Dr.Ing']
+                      'Dipl. Ing.','Dr. Ing.','Dipl. Ing','Dr. Ing']
 
         list_title = list_title +\
                      [x.upper() for x in list_title] +\
                      [x.lower() for x in list_title] +\
                      [x.capitalize() for x in list_title]
+        
                  
         dict_title = dict(zip(list_title, ['titel']*len(list_title)))
 
@@ -493,8 +521,28 @@ class namenorm():
         self.__text = ' '.join([CamelCase_one_word(x) if y == 'str' else x for x,y in\
                                  zip(self.__sentence,self.__annotate)])
         
-        logger.debug('cut CamelCase:')
+        logger.debug('cut pure CamelCase:')
         logger.debug(f'    {self.__text}')
+        
+    def _cut_initials(self):        
+        ## cut initials that are put together , e.g. A.J.
+        ## tokenizer does split the last dot away => A.J
+        def split_initials_one_word(word):
+            if len(re.findall("^[A-Z].[A-Z]$",word))==1:
+                return word[0]+' '+word[2]
+            else: 
+                pass
+            return word
+
+        self.__text = ' '.join([split_initials_one_word(x) if y == 'str' else x for x,y in\
+                                 zip(self.__sentence,self.__annotate)])
+        
+        logger.debug('cut concat with dot Initials:')
+        logger.debug(f'    {self.__text}')           
+        
+        
+        
+        
         return None        
 
 
@@ -618,83 +666,85 @@ class namenorm():
         return firstname, lastname
 
 
-    def _extract_name(self):
-        ''' extract the first and the last names
+    #def _extract_name(self):
+        #''' extract the first and the last names
             
-            inp: self.__sentence  <list(str)>        | tokenized string
-                 self.__annotate  <list(str)>        | annotations
-            upd: self.name['firstname'] <list(str)>  | firstnames, same order as input
-                 self.name['lastname']  <list(str)>  | lastnames,  same order as input
-            out: None
-        '''
-        ## is there a comma ?
-        try:
-            idx=self.__annotate.index('komma')
-        except: 
-            idx=-1
+            #inp: self.__sentence  <list(str)>        | tokenized string
+                 #self.__annotate  <list(str)>        | annotations
+            #upd: self.name['firstname'] <list(str)>  | firstnames, same order as input
+                 #self.name['lastname']  <list(str)>  | lastnames,  same order as input
+            #out: None
+        #'''
+        ### is there a comma ?
+        #try:
+            #idx=self.__annotate.index('komma')
+            
+        #except: 
+            #idx=-1
+            
 
-        ## gather first and last names (both plural)
-        firstname= []
-        lastname=[]
+        ### gather first and last names (both plural)
+        #firstname= []
+        #lastname=[]
 
-        ## case 1:  lastnames comma firstnames
-        ######################################
-        if idx>-1:    
-            vorkomma_sentence = self.__sentence[:idx]
-            vorkomma_annotate = self.__annotate[:idx]
-            nachkomma_sentence = self.__sentence[idx+1:]
-            nachkomma_annotate = self.__annotate[idx+1:]
+        ### case 1:  lastnames comma firstnames
+        #######################################
+        #if idx>-1:    
+            #vorkomma_sentence = self.__sentence[:idx]
+            #vorkomma_annotate = self.__annotate[:idx]
+            #nachkomma_sentence = self.__sentence[idx+1:]
+            #nachkomma_annotate = self.__annotate[idx+1:]
     
-            # extract lastnames -> before comma
-            while 1==1:
-                try:
-                    idx2 = vorkomma_annotate.index('str')
-                    lastname.append(vorkomma_sentence[idx2])
-                    vorkomma_annotate[idx2]=''
-                except:
-                    break
+            ## extract lastnames -> before comma
+            #while 1==1:
+                #try:
+                    #idx2 = vorkomma_annotate.index('str')
+                    #lastname.append(vorkomma_sentence[idx2])
+                    #vorkomma_annotate[idx2]=''
+                #except:
+                    #break
                     
-            # extract firstnames -> after comma
-            while 1==1:
-                try:
-                    idx2 = nachkomma_annotate.index('str')
-                    firstname.append(nachkomma_sentence[idx2])
-                    nachkomma_annotate[idx2]=''
-                except:
-                    break
+            ## extract firstnames -> after comma
+            #while 1==1:
+                #try:
+                    #idx2 = nachkomma_annotate.index('str')
+                    #firstname.append(nachkomma_sentence[idx2])
+                    #nachkomma_annotate[idx2]=''
+                #except:
+                    #break
             
-            if len(lastname)==0:
-                lastname=firstname
-                firstname=[]
+            #if len(lastname)==0:
+                #lastname=firstname
+                #firstname=[]
             
-        ## case 2:  firstnames lastnames or lastnames firstnames
-        ######################################
-        else:   
-            allwords=[x    for x,y in zip(self.__sentence,self.__annotate) if y=='str']
+        ### case 2:  firstnames lastnames or lastnames firstnames
+        #######################################
+        #else:   
+            #allwords=[x    for x,y in zip(self.__sentence,self.__annotate) if y=='str']
             
-            allwords=[x.replace('.','') for x in allwords]
+            #allwords=[x.replace('.','') for x in allwords]
             
-            if len(allwords)==0:
-                self.name['firstname']=[]
-                self.name['lastname']=[]
-                return
-            elif len(allwords)==1:
-                self.name['firstname']=[]
-                self.name['lastname']=allwords
-                return
+            #if len(allwords)==0:
+                #self.name['firstname']=[]
+                #self.name['lastname']=[]
+                #return
+            #elif len(allwords)==1:
+                #self.name['firstname']=[]
+                #self.name['lastname']=allwords
+                #return
 
-            # LEGACY: hard coded rule based        
-            #lastname = [allwords[-1]]
-            #firstname = allwords[:-1]
+            ## LEGACY: hard coded rule based        
+            ##lastname = [allwords[-1]]
+            ##firstname = allwords[:-1]
         
-            firstname, lastname = self._get_p(allwords)
+            #firstname, lastname = self._get_p(allwords)
         
         
-        self.name['firstname'] = firstname
-        self.name['lastname']  = lastname
+        #self.name['firstname'] = firstname
+        #self.name['lastname']  = lastname
         
-        logger.debug('Version 1: extract name')
-        return None
+        #logger.debug('Version 1: extract name')
+        #return None
   
     def _cap_all(self,namelist):
         
@@ -753,6 +803,7 @@ class namenorm():
                                            ' '.join(self.name['firstname'])
                                            ).strip()
         
+        # TODO this has to be more general
         self.name['fullname'] = self.name['fullname'].replace("d' ","d'")
         
         
@@ -780,13 +831,15 @@ class namenorm():
     
     #def _remove_minus(self):
     #    self.__text=self.__text.replace('-',' ')
+## legycy until here
 
 
     def pre_core(self):
         self.sentence=[[x,y,z[0],z[1],None] for x, y,z in \
                     zip(self.__sentence,self.__annotate,self.__p_first )]
-        
-        self.sent=[x for x in self.sentence if x[1] in ['prefix','initial','str']]
+        logger.debug(f'        {self.sentence}')
+        self.sent=[x for x in self.sentence if x[1] in ['prefix','initial','str','komma']]
+        #self.sent=[x for x in self.sentence if x[1] in ['prefix','initial','str']]
         
         #logger.debug(f'        {self.sentence}')
         logger.debug('Version 2: extract names')
@@ -796,17 +849,35 @@ class namenorm():
 
     def core(self):
         
-        sent=self.sent
         
         
-        ## names without comma are more likely to be firstname, lastname   
-        ## apply fl-faktor to point into this direction
-        self.sent[0][2]  = self.sent[0][2]*self.fl_faktor[0]
-        self.sent[-1][2] = self.sent[-1][2]*self.fl_faktor[1]
+
+        ### is there a comma inside?
+        if 'komma' in [x[1] for x in self.sent]:
+            self.komma_inside=True
+        else:            
+            self.komma_inside=False
         
-        self.sent[0][3]  = 1-self.sent[0][2]
-        self.sent[-1][3] = 1-self.sent[-1][2]
+        
+        # apply factors 
+        if self.komma_inside:
+            ## names without comma are more likely to be firstname lastname   
+            ## apply on p_firstname
+            self.sent[0][2]  = self.sent[0][2]*self.fl_faktor[0]
+            self.sent[-1][2] = self.sent[-1][2]*self.fl_faktor[1]
+            ## adjust p_lastname
+            self.sent[0][3]  = 1-self.sent[0][2]
+            self.sent[-1][3] = 1-self.sent[-1][2]
+        else:
+            ## names with comma are more likely to be more lastname firstname
+            ## apply on p_firstname            
+            self.sent[0][2]  = self.sent[0][2]*self.lf_faktor[0]
+            self.sent[-1][2] = self.sent[-1][2]*self.lf_faktor[1]
+            ## adjust p_lastname
+            self.sent[0][3]  = 1-self.sent[0][2]
+            self.sent[-1][3] = 1-self.sent[-1][2]
             
+        sent=self.sent
         
         # is there a prefix inside ?
         flag_prefix_end = False
@@ -883,7 +954,8 @@ class namenorm():
                 for x in sent ]
         logger.debug('    initials are per definition first names')
         logger.debug(f'        {sent}')
-        
+
+                
         ## initials inside
         try:
             li=[x[1] for x in sent]
@@ -907,16 +979,26 @@ class namenorm():
             logger.debug('    initial at last position -> first word is last name')
             logger.debug(f'        {sent}')
         else:
-            one = [ [x[0],x[1],x[2],x[3],'first'] for x in sent[:cutidx+1]   ]
-            two = [ [x[0],x[1],x[2],x[3], 'last'] for x in sent[cutidx+1:]   ]
-            sent=one+two
-            logger.debug('    initial between first and last position: before last initial=first name, after is last name') 
-            logger.debug(f'        {sent}')
+            if self.komma_inside:
+                logger.debug('    comma inside -> do nothing') 
+                logger.debug(f'        {sent}')
+            else:
+                one = [ [x[0],x[1],x[2],x[3],'first'] for x in sent[:cutidx+1]   ]
+                two = [ [x[0],x[1],x[2],x[3], 'last'] for x in sent[cutidx+1:]   ]
+                sent=one+two
+                logger.debug('    no comma inside: initial between first and last position: before last initial is first name, after last initial is last name') 
+                logger.debug(f'        {sent}')
             
         ## correct p values for already known 
         sent = [ [x[0],x[1],1,0,x[4]] if x[4]=='first' else x for x in sent ]
         sent = [ [x[0],x[1],0,1,x[4]] if x[4]=='last'  else x for x in sent ]
         logger.debug('    adjust p values for well defined first and last names')
+        logger.debug(f'        {sent}')
+        
+        
+        ## remove komma
+        sent =[ x for x in sent if x[1] != 'komma']
+        logger.debug('    komma removed')
         logger.debug(f'        {sent}')
         
         # any words not assigned?
