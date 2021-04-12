@@ -70,12 +70,14 @@ class namenorm():
         # if there is NO comma inside it's more likely to be: firstname lastname 
         # (factor on p_firstname of the first word , factor on p_firstname of the last word)
         # this is applied only to the first and the last word 
-        self.fl_faktor=(1.1,0.9)
+        #self.fl_faktor=(1.1,0.9)
+        self.fl_faktor=(1,1)
         
         # if there is a comma inside it's more likely to be: lastname firstname
         # (factor on p_firstname of the first word , factor on p_firstname of the last word)
         # this is applied only to the first and the last word 
-        self.lf_faktor=(0.9,1.1)
+        #self.lf_faktor=(0.9,1.1)
+        self.lf_faktor=(1,1)
         
         return None
     
@@ -390,7 +392,7 @@ class namenorm():
                        'de',"d_",'le','la','de la',
                        'di','de','del','da','degli','dalla',
                        'van de','van ter','van','ter',
-                       'van den', 'van der', 'te','o_'
+                       'van den', 'van der', 'te','o_','van dan','van den', 'van der', 'abu'
                       ]
         
         prefix_list = prefix_list +\
@@ -528,7 +530,7 @@ class namenorm():
         ## cut initials that are put together , e.g. A.J.
         ## tokenizer does split the last dot away => A.J
         def split_initials_one_word(word):
-            if len(re.findall("^[A-Z].[A-Z]$",word))==1:
+            if len(re.findall("^[A-Z]\.[A-Z]$",word))==1:
                 return word[0]+' '+word[2]
             else: 
                 pass

@@ -60,12 +60,19 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('Maria del Pilar del Toro')
 #pnn.unify('del Toro Maria del Pilar')
 #pnn.unify("Navsaria, P.H.")
-pnn.unify("Clevert, J. D.A. Max")
+#pnn.unify("Clevert, J. D.A. Max")
 #pnn.unify("Shu, Xiao-Ou")
 #pnn.unify('Ph.D. Last, First')
 #pnn.unify('PhD Last, ')
+#pnn.unify('Last, First, second, third')
+#pnn.unify('First, Second, Last')    
+#pnn.unify('Thomas J. VAN DAN ELZEN')    
+#pnn.unify('Thomas J. von ELZEN (MBA)')    
+#pnn.unify('DE BEI, Claudio')
+#pnn.unify('Claudio DE BEI')
+#pnn.unify('Last, First SxT.')
+pnn.unify('Marco Robin VAN HESSEM	')
 
-#an initial must not be the first one in the list of firstnames !   REMOVE DOTS AFTER TITLE EXTRACTION !
 
 
 from pprint import pprint
