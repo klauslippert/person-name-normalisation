@@ -37,6 +37,8 @@ class namenorm():
               
               
         '''
+        #print('debug here')
+        
         self.debug = debug
         
         # handle logging
@@ -56,7 +58,7 @@ class namenorm():
         # load p values from Naive Bayes
         
         path=os.path.dirname(os.path.abspath(__file__))
-        print(path)
+        #print(path)
         self.p_firstname = pickle.load(open(path+"/p_firstname.p","rb"))
         logger.debug('loaded p values firstname')
 
@@ -171,7 +173,7 @@ class namenorm():
         _ = self._capitalize()
         _ = self._create_output()
 
-
+        
         
         
         
@@ -372,7 +374,7 @@ class namenorm():
         list_title = ['Prof.','Prof',
                       'PhD', 'Ph.D.','Ph. D.','Ph. D', 'Dr.','Dr',
                       'MBA','MSc.','BSc.','M.A.','B.A.',
-                      'MSc','BSc','M.A','B.A',
+                      'MSc','BSc',#'M.A','B.A',
                       'Dipl.','Dipl',
                       'Dipl. Ing.','Dr. Ing.','Dipl. Ing','Dr. Ing']
 

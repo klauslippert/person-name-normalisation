@@ -71,9 +71,9 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('DE BEI, Claudio')
 #pnn.unify('Claudio DE BEI')
 #pnn.unify('Last, First SxT.')
-pnn.unify('Marco Robin VAN HESSEM	')
-
-
+#pnn.unify('Marco Robin VAN HESSEM	')
+#pnn.unify('Hemminga, M.A.')
+pnn.unify('Waard, M.A., de')
 
 from pprint import pprint
 pprint(pnn.name)
@@ -81,4 +81,6 @@ print('version:',personnamenorm.__version__)
 
 
 
+#python setup.py sdist bdist_wheel
+#pip install --force-reinstall dist/personnamenorm-XXX.whl
 
