@@ -818,7 +818,7 @@ class namenorm():
         #                                 ).strip()
         self.name['fullname_abbrev'] = '{}, {}'.format( 
                                                   ' '.join(self.name['lastname']),
-                                                  ' '.join([x[0] for x in firstnames_flat])        
+                                                  ' '.join([x[0] for x in firstnames_flat if x != ''])        
                                          ).strip()
         
         
