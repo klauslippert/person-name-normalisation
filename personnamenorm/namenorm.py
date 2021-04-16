@@ -264,7 +264,7 @@ class namenorm():
        
        
         ## some special prefix
-        self.__text=self.__text.replace("'","_ ")
+        self.__text=self.__text.replace("'","_")
        
        
        
@@ -811,10 +811,17 @@ class namenorm():
         self.name['fullname'] = self.name['fullname'].replace("d' ","d'")
         
         
-        self.name['fullname_abbrev'] = '{}, {}'.format(    #      ' '.join(self.name['prefix']),
+        firstnames_flat = [item for sublist in [x.split(' ') for x in self.name['firstname']]  for item in sublist]
+        #self.name['fullname_abbrev'] = '{}, {}'.format(    #      ' '.join(self.name['prefix']),
+        #                                          ' '.join(self.name['lastname']),
+        #                                          ' '.join([x[0] for x in self.name['firstname']])        
+        #                                 ).strip()
+        self.name['fullname_abbrev'] = '{}, {}'.format( 
                                                   ' '.join(self.name['lastname']),
-                                                  ' '.join([x[0] for x in self.name['firstname']])        
+                                                  ' '.join([x[0] for x in firstnames_flat])        
                                          ).strip()
+        
+        
         self.name['fullname_abbrev'] = self.name['fullname_abbrev'].replace("d' ","d'")
         
         
@@ -1026,17 +1033,18 @@ class namenorm():
             #res_p=[]
             #max_p_total=[]
             p_total=[]    
+            
             for direction in directions:
  
                 if direction=='lf':
                     sent = sent[::-1]  
 
+                ## now we vary the cut position and calculate the product of the p_values
                 for cut in range(1,len(sent)):
                     one = sent[:cut]
                     p_one = prod([x[2] for x in one])  # p for firstnames
                     two = sent[cut:]
                     p_two = prod([x[3] for x in two])  # p for lastnames
-        
                     if direction=='lf':
                         one = one[::-1]  
                         two = two[::-1]  
@@ -1051,14 +1059,18 @@ class namenorm():
                 if direction=='lf':
                     sent = sent[::-1]  
 
-        
+                
+                if len(sent)==1: #if only one word, this must be lastname
+                    p_total.append(('lf',0,1,{'first':'','last':sent[0]}))
+                    
+                
                 #max_p_total.append( [x  for x in p_total if x[2] == max([y[2] \
                  #                    for y in p_total])]  )
     
             result = [x for x in p_total if x[2] == max([y[2] for y in p_total]) ]
+
             
             logger.debug('    checked all possible cut off positions')
-            
             
             sent = [ [x[0],x[1],x[2],x[3],'first'] \
                      if x[0] in result[0][3]['first'] \

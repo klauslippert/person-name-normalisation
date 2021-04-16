@@ -58,7 +58,7 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify(' Garcia   Castro Leyla Jael ')
 #pnn.unify(' Norbert Walter Borjans ')
 #pnn.unify('Maria del Pilar del Toro')
-#pnn.unify('del Toro Maria del Pilar')
+pnn.unify('del Toro Maria del Pilar')
 #pnn.unify("Navsaria, P.H.")
 #pnn.unify("Clevert, J. D.A. Max")
 #pnn.unify("Shu, Xiao-Ou")
@@ -73,8 +73,11 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('Last, First SxT.')
 #pnn.unify('Marco Robin VAN HESSEM	')
 #pnn.unify('Hemminga, M.A.')
-pnn.unify('Waard, M.A., de')
+#pnn.unify('Waard, M.A., de')
+#pnn.unify('Van Khoa,  Le')
+#pnn.unify("Mannetje, L., 't")
 
+    
 from pprint import pprint
 pprint(pnn.name)
 print('version:',personnamenorm.__version__)

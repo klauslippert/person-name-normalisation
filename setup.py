@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="personnamenorm",
-    version="0.2.7",
+    version="0.2.8",
     author="Klaus Lippert",
     author_email="",
     description="unifying person names in different notations",
@@ -21,6 +21,7 @@ setuptools.setup(
     ],
     install_requires=[
         "nltk >= 3.4",
-        "ftfy >= 5.8"
+        "ftfy >= 5.8",
+        "wget"
     ]
 )
