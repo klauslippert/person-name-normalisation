@@ -76,8 +76,10 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify('Waard, M.A., de')
 #pnn.unify('Van Khoa,  Le')
 #pnn.unify("Mannetje, L., 't")
-pnn.unify("Cham ' Mead ', Jennifer A")
-    
+#pnn.unify("Cham ' Mead ', Jennifer A")
+#pnn.unify("Fariña, Silvia")
+pnn.unify("Netherlands)), (The")
+
 from pprint import pprint
 pprint(pnn.name)
 print('version:',personnamenorm.__version__)

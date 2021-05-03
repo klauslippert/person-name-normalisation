@@ -432,12 +432,15 @@ class namenorm():
                 self.annotate <list(str)> | annotations without brackets and content
            out: None
         '''
-        while 1==1:
+        security_break = 1
+        while security_break<=100:
             try:
+                security_break = security_break + 1
                 von = self.__annotate.index('klammerauf')
                 bis = self.__annotate.index('klammerzu')
                 self.__annotate[von:bis+1]=''
                 self.__sentence[von:bis+1]=''
+
             except:
                 break
             
