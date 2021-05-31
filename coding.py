@@ -78,7 +78,13 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify("Mannetje, L., 't")
 #pnn.unify("Cham ' Mead ', Jennifer A")
 #pnn.unify("Fariña, Silvia")
-pnn.unify("Netherlands)), (The")
+#pnn.unify("Netherlands)), (The")
+#pnn.unify("MÜLLER, L.")
+#pnn.unify("MULLER, Lisa")
+#pnn.unify("MÖLLER, Lisa")
+pnn.unify("ÖLLER, Lisa")
+
+
 
 from pprint import pprint
 pprint(pnn.name)

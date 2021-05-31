@@ -295,7 +295,7 @@ class namenorm():
             out: None
        '''
         umlaute = {'ä':'ae','ö':'oe','ü':'ue',
-                   'Ä':'Ae','Ö':'Oe','Ü':'Ue',
+                   'Ä':'AE','Ö':'OE','Ü':'UE',
                    'ß':'ss'}
         for umlaut in umlaute.keys():
             self.__text = self.__text.replace(umlaut,umlaute[umlaut])
@@ -534,6 +534,7 @@ class namenorm():
     def _cut_initials(self):        
         ## cut initials that are put together , e.g. A.J.
         ## tokenizer does split the last dot away => A.J
+        
         def split_initials_one_word(word):
             if len(re.findall("^[A-Z]\.[A-Z]$",word))==1:
                 return word[0]+' '+word[2]
