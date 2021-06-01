@@ -220,6 +220,7 @@ class namenorm():
         ''' remove 
             * tabs \t
             * everything which comes after newline \n or ¶
+            * everything which comes after c/o
             
             inp: self.text  <str> | text
             upd: self.text  <str> | text without formating chars
@@ -227,6 +228,7 @@ class namenorm():
         '''
         self.__text = self.__text.replace('\n','CUT')
         self.__text = self.__text.replace('¶','CUT')
+        self.__text = self.__text.replace('c/o','CUT')
         self.__text = self.__text.split('CUT')[0].strip()
         self.__text = self.__text.replace('\t',' ')            
         
@@ -376,7 +378,9 @@ class namenorm():
                       'MBA','MSc.','BSc.','M.A.','B.A.',
                       'MSc','BSc',#'M.A','B.A',
                       'Dipl.','Dipl',
-                      'Dipl. Ing.','Dr. Ing.','Dipl. Ing','Dr. Ing']
+                      'Dipl. Ing.','Dr. Ing.','Dipl. Ing','Dr. Ing'
+                      'Priv.Doz.','Dr.-med.','Prof. Dr.'                    
+                      ]
 
         list_title = list_title +\
                      [x.upper() for x in list_title] +\

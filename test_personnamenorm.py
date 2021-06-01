@@ -80,6 +80,8 @@ inputdata=[
 "O'Last First",
 "Last, First S.T.",
 "Last, First SxT.",
+"Last, First c/o company",
+"Last, Firstc/o company",
 
 ]
 
@@ -158,6 +160,8 @@ target = [
 {'raw':"O'Last First",'firstname':['First'], 'lastname':["O Last"],'title':[], 'prefix':[], 'fullname': "O Last, First",'fullname_abbrev': "O Last, F"},
 {'raw':"Last, First S.T.",'firstname':['First S T'], 'lastname':["Last"],'title':[], 'prefix':[], 'fullname': "Last, First S T",'fullname_abbrev': "Last, F S T"},
 {'raw':"Last, First SxT.",'firstname':['First Sx T'], 'lastname':["Last"],'title':[], 'prefix':[], 'fullname': "Last, First Sx T",'fullname_abbrev': "Last, F S T"},
+{'raw':"Last, First c/o company",'firstname':['First'], 'lastname':["Last"],'title':[], 'prefix':[], 'fullname': "Last, First",'fullname_abbrev': "Last, F"},
+{'raw':"Last, Firstc/o company",'firstname':['First'], 'lastname':["Last"],'title':[], 'prefix':[], 'fullname': "Last, First",'fullname_abbrev': "Last, F"},
 
 ]
 

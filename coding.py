@@ -82,7 +82,10 @@ pnn.p_firstname['last2']=1e-4
 #pnn.unify("MÜLLER, L.")
 #pnn.unify("MULLER, Lisa")
 #pnn.unify("MÖLLER, Lisa")
-pnn.unify("ÖLLER, Lisa")
+#pnn.unify("ÖLLER, Lisa")
+#pnn.unify('Müller, Hans c/o company')
+#pnn.unify('Müller, Hansc/o company')
+pnn.unify('Dr.med. Hans Müller')
 
 
 

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="personnamenorm",
-    version="0.2.11",
+    version="0.2.12",
     author="Klaus Lippert",
     author_email="",
     description="unifying person names in different notations",
@@ -25,3 +25,8 @@ setuptools.setup(
         "wget"
     ]
 )
+
+## how 2 make a packages
+#python setup.py bdist_wheel
+## how 2 install_
+#pip install --upgrade --force-reinstall <package>
