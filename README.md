@@ -37,8 +37,8 @@ nameobj = pnn.namenorm('Dr. Dipl. Firstname Secondname von und zu Lastname')
 nameobj.name <dict>
 {
     'raw': 'Dr. Dipl. Firstname von und zu Lastname',
-    'Firstname': ['Firstname','Secondname'],
-    'Lastname': ['Lastname'],
+    'firstname': ['Firstname','Secondname'],
+    'lastname': ['Lastname'],
     'title': ['Dr.','Dipl.'],
     'prefix': ['von und zu']
 }
