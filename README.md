@@ -1,5 +1,7 @@
 # Person Name Normalisation
 
+[![DOI](https://zenodo.org/badge/304649488.svg)](https://zenodo.org/doi/10.5281/zenodo.11182093)
+
 ### Unifying person names in different notations
 
 different sources write person names in different notations:
